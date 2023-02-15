@@ -33,7 +33,7 @@ PlatziMath.isPar = function isPar (lista){
 }
 
 PlatziMath.median = function median (lista){
-    const listIsPar = isPar(lista)
+    const listIsPar = PlatziMath.isPar(lista)
     lista.sort( (a, b) => a - b);
     if (lista.length == 1){
         const medianList = lista[0];
