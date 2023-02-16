@@ -40,3 +40,41 @@ function proyeccionSalarial (nombrePersona){
     console.log('Salario proyectado próximo año:' + salarioProyectado)
     return proyeccion;
 }
+
+//Análisis empresarial
+
+const empresas = {};
+
+for (persona of salarios){
+    for (trabajo of persona.trabajos){
+        if (!empresas[trabajo.empresa]){
+            empresas[trabajo.empresa] = {};
+        }
+        if (!empresas[trabajo.empresa][trabajo.year]){
+            empresas[trabajo.empresa][trabajo.year] = [];
+        }
+        empresas[trabajo.empresa][trabajo.year].push(trabajo.salario)
+    }
+}
+
+function medianaSalarioXempresa (empresa, yearAnalisis){
+    if (!empresas[empresa]){
+        console.warn('La empresa no existe');
+    } else if (!empresas[empresa][yearAnalisis]){
+        console.warn('Sin registro de salarios para el año ' + yearAnalisis)
+    }else {
+        const listaEmpresas = Object.entries(empresas);
+        const empresaAnalisis = listaEmpresas.find((nombreEmpresa) => nombreEmpresa[0] == empresa);
+        const listaYears = Object.entries(empresaAnalisis[1]);
+        for (year of listaYears){
+            if (year[0] == yearAnalisis){
+                const medianaYear = PlatziMath.median(year[1]);
+                console.log(medianaYear)
+            }
+        }
+        // Solucion rápida
+        const medianaYear2 = PlatziMath.median(empresas[empresa][yearAnalisis]);
+        console.log(medianaYear2)
+        
+    }
+}
